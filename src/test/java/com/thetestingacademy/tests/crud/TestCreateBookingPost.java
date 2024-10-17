@@ -14,6 +14,7 @@ public class TestCreateBookingPost {
     @Description("Verify that POST request is working fine.")
     @Test
     public void testVerifyCreateBookingPOST01(){
+
         Assert.assertEquals(true,true);
     }
 
