@@ -3,6 +3,7 @@ package com.thetestingacademy.tests.crud;
 import com.thetestingacademy.base.BaseTest;
 import com.thetestingacademy.endpoints.APIConstants;
 import com.thetestingacademy.pojos.BookingResponse;
+import com.thetestingacademy.utils.PropertyReader;
 import io.qameta.allure.*;
 import io.restassured.RestAssured;
 import org.hamcrest.Matchers;
@@ -35,19 +36,19 @@ public class TestCreateBookingPost extends BaseTest {
         validate.statusCode(200);
 
 //       Default Rest Assured Matchers
-        validate.body("booking.firstname", Matchers.equalTo("Mohamed"));
+        validate.body("booking.firstname", Matchers.equalTo(PropertyReader.readKey("booking.post.firstname")));
 
         BookingResponse bookingresponse = payloadManager.bookingResponse(response.asString());
 //     AssertJ Assertions
         assertThat(bookingresponse.getBookingid()).isNotBlank().isNotNull();
-        assertThat(bookingresponse.getBooking().getFirstname()).isEqualTo("Mohamed");
-        assertThat(bookingresponse.getBooking().getLastname()).isEqualTo("Arshad");
+        assertThat(bookingresponse.getBooking().getFirstname()).isEqualTo(PropertyReader.readKey("booking.post.firstname"));
+        assertThat(bookingresponse.getBooking().getLastname()).isEqualTo(PropertyReader.readKey("booking.post.lastname"));
 
 //      TestNG Assertion (Using TestNG Assertions via the Default Assertion class we created)
-       assertActions.verifyStatusCode(response,200);
+       assertActions.verifyStatusCode(response,Integer.valueOf(PropertyReader.readKey("booking.post.success.statuscode")));
 
 //       Direct TestNG Assertions
-        Assert.assertEquals(response.getStatusCode(), 200);
+        Assert.assertEquals(response.getStatusCode(), Integer.valueOf(PropertyReader.readKey("booking.post.success.statuscode")));
 
 
 
@@ -74,19 +75,22 @@ public class TestCreateBookingPost extends BaseTest {
         validate.statusCode(200);
 
 //       Default Rest Assured Matchers
-        validate.body("booking.firstname", Matchers.equalTo("Mohamed"));
+        validate.body("booking.firstname", Matchers.equalTo(PropertyReader.readKey("booking.post.firstname")));
 
     BookingResponse bookingresponse = payloadManager.bookingResponse(response.asString());
     //     AssertJ Assertions
     assertThat(bookingresponse.getBookingid()).isNotBlank().isNotNull();
-    assertThat(bookingresponse.getBooking().getFirstname()).isEqualTo("Mohamed");
-    assertThat(bookingresponse.getBooking().getLastname()).isEqualTo("Arshad");
+    assertThat(bookingresponse.getBooking().getFirstname()).isEqualTo(PropertyReader.readKey("booking.post.firstname"));
+    assertThat(bookingresponse.getBooking().getLastname()).isEqualTo(PropertyReader.readKey("booking.post.lastname"));
 
 //      TestNG Assertion (Using TestNG Assertions via the Default Assertion class we created)
-       assertActions.verifyStatusCode(response,200);
+       assertActions.verifyStatusCode(response, Integer.valueOf(PropertyReader.readKey("booking.post.success.statuscode")));
+
+
+
 
 //       Direct TestNG Assertions
-        Assert.assertEquals(response.getStatusCode(), 200);
+        Assert.assertEquals(response.getStatusCode(), Integer.valueOf(PropertyReader.readKey("booking.post.success.statuscode")));
     }
 
 }

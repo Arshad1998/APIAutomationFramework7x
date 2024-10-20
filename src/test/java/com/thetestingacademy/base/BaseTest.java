@@ -1,5 +1,6 @@
 package com.thetestingacademy.base;
 
+import com.thetestingacademy.pojos.AuthTokenResponse;
 import io.restassured.RestAssured;
 
 import io.restassured.builder.RequestSpecBuilder;
@@ -15,7 +16,10 @@ import com.thetestingacademy.endpoints.APIConstants;
 import io.restassured.path.json.JsonPath;
 
 import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
 
+//   We can use this a Parent class for Test Cases applicable
+//         In our framework we used for this as a parent class for the  CURD operations
 public class BaseTest {
 //    Common to all Test Cases
 //    Inheritance Concept - Father (Base Test) -> Test Case (Son)
@@ -71,9 +75,23 @@ public class BaseTest {
 //    }
 
 
+    public String getToken(){
+
+        request = RestAssured.given();
+        request.baseUri(APIConstants.BASE_URL);
+        request.basePath(APIConstants.AUTH_URL);
+        request.contentType(ContentType.JSON);
+        request.body(payloadManager.PayloadForCreateToken()).log().all();
+
+        response = request.when().post();
+
+        validate = response.then().log().all();
+
+        return payloadManager.tokenResponse(response.asString());
+    }
 
 
-//   We can use this a Parent class for Test Cases applicable
-//         In our framework we used for this as a parent class for the  CURD operations
+
+
 
 }
